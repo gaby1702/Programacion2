@@ -1,0 +1,33 @@
+public class Main {
+    public static void main(String[] args) {
+
+        MiTeleferico mt = new MiTeleferico();
+
+        Linea a = new Linea("Amarillo");
+        Linea r = new Linea("Rojo");
+        Linea v = new Linea("Verde");
+
+        a.agregarCabina(1);
+        r.agregarCabina(1);
+        v.agregarCabina(1);
+
+        mt.agregarLinea(a);
+        mt.agregarLinea(r);
+        mt.agregarLinea(v);
+
+        Persona p1 = new Persona("Ana", 20, 55);
+        Persona p2 = new Persona("Luis", 40, 80);
+        Persona p3 = new Persona("Marta", 70, 60);
+
+        mt.agregarPersonaACabina("Amarillo", 1, p1);
+        mt.agregarPersonaACabina("Amarillo", 1, p2);
+        mt.agregarPersonaACabina("Rojo", 1, p3);
+
+        System.out.println("¿Todas las cabinas cumplen reglas?: " + mt.verificarTodasLasCabinas());
+        System.out.println("Ingreso total: " + mt.ingresoTotal());
+
+        Linea mejor = mt.lineaMayorIngresoRegular();
+        if (mejor != null)
+            System.out.println("Línea con más ingreso regular: " + mejor.color);
+    }
+}
