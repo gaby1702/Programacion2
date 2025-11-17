@@ -1,0 +1,61 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class MiTeleferico {
+    List<Linea> lineas;
+    float cantidadIngresos;
+
+    public MiTeleferico() {
+        lineas = new ArrayList<>();
+    }
+
+    public void agregarLinea(Linea l) {
+        lineas.add(l);
+    }
+
+    public Linea buscarLinea(String color) {
+        for (Linea l : lineas)
+            if (l.color.equalsIgnoreCase(color)) return l;
+        return null;
+    }
+
+    public boolean agregarPersonaACabina(String linea, int nroCab, Persona p) {
+        Linea l = buscarLinea(linea);
+        if (l == null) return false;
+
+        Cabina c = l.buscarCabina(nroCab);
+        if (c == null) return false;
+
+        boolean added = c.agregarPersona(p);
+        if (added) {
+            if (p.edad <= 25 || p.edad > 60) cantidadIngresos += 1.5;
+            else cantidadIngresos += 3;
+        }
+        return added;
+    }
+
+    public boolean verificarTodasLasCabinas() {
+        for (Linea l : lineas)
+            if (!l.verificarReglasCabinas()) return false;
+        return true;
+    }
+
+    public float ingresoTotal() {
+        float total = 0;
+        for (Linea l : lineas) total += l.ingresoLinea();
+        return total;
+    }
+
+    public Linea lineaMayorIngresoRegular() {
+        Linea mejor = null;
+        float max = -1;
+        for (Linea l : lineas) {
+            float ingreso = l.ingresoSoloRegular();
+            if (ingreso > max) {
+                max = ingreso;
+                mejor = l;
+            }
+        }
+        return mejor;
+    }
+}
